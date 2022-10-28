@@ -1,5 +1,4 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
 
@@ -37,18 +36,7 @@ class HuffmanTreeTest {
       HuffmanTree.SymbolNodeData[] testArray = { testNode2, testNode1,
             testNode3, testNode4 };
       ht.buildTree(testArray);
-//      System.out.println(ht.preOrderTraversalHuffmanTree());
-
-   }
-
-   @Test
-   void buildTreeTestEmptyArray() {
-      fail("Not yet implemented");
-   }
-
-   @Test
-   void buildTreeTestNonChar() {
-      fail("Not yet implemented");
+      ht.printPreorderTraverse(System.out);
    }
 
 //   @Test

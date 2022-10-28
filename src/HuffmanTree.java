@@ -1,3 +1,5 @@
+import java.io.PrintStream;
+
 /**
  * The HuffmanTree class provides methods for building a Huffman tree to encode
  * an array of symbols in a binary string, printing the tree in preorder
@@ -49,31 +51,29 @@ public class HuffmanTree {
    protected String traversalResult = " ";
 
    /**
-    * Takes an array of SymbolNode objects as arguments and creates a Huffman Tree
-    * from them.
+    * Takes an array of SymbolNode objects as arguments and creates a Huffman
+    * Tree from them.
     * 
     * @param symbols An array of SymbolNode objects.
     */
    public void buildTree(SymbolNodeData[] symbols) {
       /**
-       * This instantiation statement is rather complicated. The type is a priority
-       * queue containing binary trees made up of symbol nodes as data.
+       * This instantiation statement is rather complicated. The type is a
+       * priority queue containing binary trees made up of symbol nodes as data.
        * 
-       * The comparator uses a lamba expression to make it so that the comparison is
-       * based on the weight of the SymbolNodeDatas.
+       * The comparator uses a lamba expression to make it so that the
+       * comparison is based on the weight of the SymbolNodeDatas.
        * 
        */
       PriorityQueue<BinaryTree<SymbolNodeData>> huffQ = new PriorityQueue<>(
-            (leftTree, rightTree) -> Double.compare(
-                  leftTree.getData().weight,
+            (leftTree, rightTree) -> Double.compare(leftTree.getData().weight,
                   rightTree.getData().weight));
 
       // Iterate through the array of symbol nodes to load the
       // priority queue.
       for (SymbolNodeData s : symbols) {
          // Creates trees which all have only one SymbolNodeData to begin
-         var binaryTreeItem = new BinaryTree<SymbolNodeData>(s, null,
-               null);
+         var binaryTreeItem = new BinaryTree<SymbolNodeData>(s, null, null);
          // Moves single-node tree of symbol data from above into the queue,
          // where it is sorted by weight.
          huffQ.offer(binaryTreeItem);
@@ -93,13 +93,34 @@ public class HuffmanTree {
          // Combines the sum root and its two subtrees into a tree and feeds
          // it into the priority queue, where it is then sorted by its weight
          // (ie, the root which is the sum).
-         var combinedTree = new BinaryTree<SymbolNodeData>(sum, left,
-               right);
+         var combinedTree = new BinaryTree<SymbolNodeData>(sum, left, right);
          huffQ.offer(combinedTree);
       }
       // Final tree left will be the accumulated combination of all
       // subtrees
       huffmanTree = huffQ.poll();
+   }
+
+   private void printCode(PrintStream out, String code,
+         BinaryTree<SymbolNodeData> tree) {
+      SymbolNodeData huffQ = tree.getData();
+      if (huffQ.symbol != Character.MIN_VALUE) {
+         if (huffQ.symbol == ' ') {
+            out.println("space: " + code);
+         }
+         else {
+            out.println(huffQ.symbol + ": " + code);
+         }
+      }
+   }
+
+   public void printPreorderTraverse(PrintStream out) {
+      if (huffmanTree == null) {
+         System.out.println("The tree is empty.");
+      }
+      else {
+         printCode(out, "", huffmanTree);
+      }
    }
 //
 //   public String preOrderTraversalHuffmanTree() {
