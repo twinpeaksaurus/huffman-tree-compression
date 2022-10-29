@@ -1,3 +1,4 @@
+
 import java.io.PrintStream;
 
 /**
@@ -17,129 +18,153 @@ public class HuffmanTree {
     * enclosing HuffmanTree class.
     */
    public static class SymbolNodeData {
+      // Data Fields
+
       // Frequency assigned to a given symbol.
-      private double weight;
-      // Char in the node.
+      private double freq;
+      // char in the node
       private char symbol;
 
-      /**
-       * Constructor for a node with a symbol and its frequency.
-       * 
-       * @param weight The weight of the associated symbol.
-       * @param symbol The character in the node.
-       */
-      public SymbolNodeData(double weight, char symbol) {
-         this.weight = weight;
+      public SymbolNodeData(double freq, char symbol) {
+         this.freq = freq;
          this.symbol = symbol;
-      }
-
-      public double getWeight() {
-         return this.weight;
       }
 
       public char getSymbol() {
          return symbol;
       }
 
+      public double getFreq() {
+         return freq;
+      }
+
+      @Override
+      public boolean equals(Object o) {
+         if (this == o)
+            return true;
+         if (o == null)
+            return false;
+         if (this.getClass() == o.getClass()) {
+            SymbolNodeData other = (SymbolNodeData) o;
+            return freq == other.freq && symbol == other.symbol;
+         }
+         else {
+            return false;
+         }
+      }
+
+      @Override
+      public int hashCode() {
+         int hash = 7;
+         hash = 97 * hash + (int) (Double.doubleToLongBits(this.freq)
+               ^ (Double.doubleToLongBits(this.freq) >>> 32));
+         hash = 97 * hash + this.symbol;
+         return hash;
+      }
+
+      @Override
       public String toString() {
-         return (this.symbol + " - " + this.weight);
+         return (Character.toString(symbol) + ": " + freq);
       }
    }
-
-   // Data field to hold a built tree
-   private BinaryTree<SymbolNodeData> huffmanTree;
-   protected String traversalResult = " ";
 
    /**
-    * Takes an array of SymbolNode objects as arguments and creates a Huffman
-    * Tree from them.
+    * A reference to the completed Huffman tree.
+    */
+   protected BinaryTree<SymbolNodeData> huffTree;
+
+   /**
+    * Builds the Huffman tree using the given alphabet and freqs.
+    *
+    * posthuffTree contains a reference to the Huffman tree.
     * 
-    * @param symbols An array of SymbolNode objects.
+    * @param symbols An array of SymbolNodeData objects
     */
    public void buildTree(SymbolNodeData[] symbols) {
-      /**
-       * This instantiation statement is rather complicated. The type is a
-       * priority queue containing binary trees made up of symbol nodes as data.
-       * 
-       * The comparator uses a lamba expression to make it so that the
-       * comparison is based on the weight of the SymbolNodeDatas.
-       * 
-       */
       PriorityQueue<BinaryTree<SymbolNodeData>> huffQ = new PriorityQueue<>(
-            (leftTree, rightTree) -> Double.compare(leftTree.getData().weight,
-                  rightTree.getData().weight));
+            (lt, rt) -> Double.compare(lt.getData().freq,
+                  rt.getData().freq));
+      // Load the queue with the leaves.
+      for (SymbolNodeData nextSymbol : symbols) {
+         var aBinaryTree = new BinaryTree<>(nextSymbol, null, null);
+         huffQ.offer(aBinaryTree);
+      }
 
-      // Iterate through the array of symbol nodes to load the
-      // priority queue.
-      for (SymbolNodeData s : symbols) {
-         // Creates trees which all have only one SymbolNodeData to begin
-         var binaryTreeItem = new BinaryTree<SymbolNodeData>(s, null, null);
-         // Moves single-node tree of symbol data from above into the queue,
-         // where it is sorted by weight.
-         huffQ.offer(binaryTreeItem);
-      }
-      // Build the tree
+      // Build the tree.
       while (huffQ.size() > 1) {
-         // Creates trees from the two lowest priority items.
-         BinaryTree<SymbolNodeData> left = huffQ.poll();
-         BinaryTree<SymbolNodeData> right = huffQ.poll();
-         // takes weight of roots as double values
-         double weightL = left.getData().weight;
-         double weightR = right.getData().weight;
-         // Sets a "sum" parent node with a null character symbol
-         // and weight that is the sum of the two subtrees.
-         SymbolNodeData sum = new SymbolNodeData((weightL + weightR),
-               Character.MIN_VALUE);
-         // Combines the sum root and its two subtrees into a tree and feeds
-         // it into the priority queue, where it is then sorted by its weight
-         // (ie, the root which is the sum).
-         var combinedTree = new BinaryTree<SymbolNodeData>(sum, left, right);
-         huffQ.offer(combinedTree);
+         var left = huffQ.poll();
+         var right = huffQ.poll();
+         double wl = left.getData().freq;
+         double wr = right.getData().freq;
+         var sum = new SymbolNodeData(wl + wr, '\u0000');
+         var newTree = new BinaryTree<>(sum, left, right);
+         huffQ.offer(newTree);
       }
-      // Final tree left will be the accumulated combination of all
-      // subtrees
-      huffmanTree = huffQ.poll();
+
+      // The queue should now contain only one item.
+      huffTree = huffQ.poll();
    }
 
+   /**
+    * Outputs the resulting code.
+    *
+    * @param out  A PrintStream to write the output to
+    * @param code The code up to this node
+    * @param tree The current node in the tree
+    */
    private void printCode(PrintStream out, String code,
          BinaryTree<SymbolNodeData> tree) {
-      SymbolNodeData huffQ = tree.getData();
-      if (huffQ.symbol != Character.MIN_VALUE) {
-         if (huffQ.symbol == ' ') {
+      SymbolNodeData theData = tree.getData();
+      if (theData.symbol != '\u0000') {
+         if (theData.symbol == ' ') {
             out.println("space: " + code);
          }
          else {
-            out.println(huffQ.symbol + ": " + code);
+            out.println(theData.symbol + ": " + theData.freq + " : "
+                  + code);
          }
       }
-   }
-
-   public void printPreorderTraverse(PrintStream out) {
-      if (huffmanTree == null) {
-         System.out.println("The tree is empty.");
-      }
       else {
-         printCode(out, "", huffmanTree);
+         printCode(out, code + "1", tree.getLeftSubtree());
+         printCode(out, code + "0", tree.getRightSubtree());
       }
    }
-//
-//   public String preOrderTraversalHuffmanTree() {
-//      if (huffmanTree.getData() == null) {
-//         return " ";
-//      }
-//      if (huffmanTree.getData() != null) {
-//
-//         traversalResult = (traversalResult
-//               + (huffmanTree.getData().toString()) + " -> ");
-//      }
-//      preOrderTraversalHuffmanTree(huffmanTree.getLeftSubtree());
-//      preOrderTraversalHuffmanTree(huffmanTree.getRightSubtree());
-//      return traversalResult;
-//      if (huffmanTree != null) {
-//         return huffmanTree.printPreOrder();
-//      }
-//      else {
-//         return "Empty tree.";
-//      }
 
+   /**
+    * Outputs the resulting code.
+    *
+    * @param out A PrintStream to write the output to
+    */
+   public void printCode(PrintStream out) {
+      printCode(out, "", huffTree);
+   }
+
+   /**
+    * Decodes a message using a binary String as input (encoded text). Uses a
+    * StringBuilder to build a decoded message as a String.
+    * 
+    * @param code A binary string that represents the coded message.
+    * @return The decoded message as a String
+    */
+   public String decode(String code) {
+      StringBuilder result = new StringBuilder();
+      var currentTree = huffTree;
+      // uses the binary as a guide to "climb down" the tree while
+      // iterating through
+      for (int i = 0; i < code.length(); i++) {
+         if (code.charAt(i) == '1') {
+            currentTree = currentTree.getRightSubtree();
+         }
+         else {
+            currentTree = currentTree.getLeftSubtree();
+         }
+         // if it is a leaf, it is a symbol
+         if (currentTree.isLeaf()) {
+            SymbolNodeData theData = currentTree.getData();
+            result.append(theData.symbol);
+            currentTree = huffTree;
+         }
+      }
+      return result.toString();
+   }
 }

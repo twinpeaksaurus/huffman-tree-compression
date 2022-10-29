@@ -133,6 +133,16 @@ public class BinaryTree<E> {
       return preOrder(this.root);
    }
 
+   /**
+    * Determine whether this tree is a leaf.
+    *
+    * @return true if the root has no children
+    */
+   public boolean isLeaf() {
+      return (root == null
+            || (root.left == null && root.right == null));
+   }
+
    public E getData() {
       if (root != null) {
          return root.data;
@@ -141,6 +151,7 @@ public class BinaryTree<E> {
          return null;
       }
    }
+
 //
 //   /**
 //    * Starter method add.
