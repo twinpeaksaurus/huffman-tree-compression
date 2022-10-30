@@ -17,7 +17,7 @@ public class PriorityQueueTest {
 
    @Test
    public void pollTestOneItem() {
-      PriorityQueue<Integer> tq = new PriorityQueue();
+      PriorityQueue<Integer> tq = new PriorityQueue<Integer>();
       tq.offer(1);
       Object testValue = tq.poll();
       assertEquals(1, testValue);
@@ -26,7 +26,7 @@ public class PriorityQueueTest {
 
    @Test
    public void pollTestIsEmpty() {
-      PriorityQueue<Integer> tq = new PriorityQueue();
+      PriorityQueue<Integer> tq = new PriorityQueue<Integer>();
       Object testValue = tq.poll();
       assertEquals(null, testValue);
    }
@@ -36,7 +36,7 @@ public class PriorityQueueTest {
     */
    @Test
    public void peekTestNotEmpty() {
-      PriorityQueue<Integer> tq = new PriorityQueue();
+      PriorityQueue<Integer> tq = new PriorityQueue<Integer>();
       tq.offer(5);
       tq.offer(2);
       tq.offer(8);
@@ -47,7 +47,7 @@ public class PriorityQueueTest {
 
    @Test(expected = IndexOutOfBoundsException.class)
    public void peekTestEmpty() {
-      PriorityQueue<Integer> tq = new PriorityQueue();
+      PriorityQueue<Integer> tq = new PriorityQueue<Integer>();
       System.out.println(tq.peek());
       Object testValue = tq.peek();
    }

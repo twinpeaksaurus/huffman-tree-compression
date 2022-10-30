@@ -1,0 +1,38 @@
+output.txt
+A - 19  
+B - 16  
+C - 17  
+D - 11  
+E - 42  
+F - 12  
+G - 14  
+H - 17  
+I - 16  
+J - 5  
+K - 10  
+L - 20  
+M - 19  
+N - 24  
+O - 18  
+P - 13  
+Q - 1  
+R - 25  
+S - 35  
+T - 25  
+U - 15  
+V - 5  
+W - 21  
+X - 2  
+Y - 8  
+Z - 3 
+!!!
+Sally sells seashells by the seashore.  
+Peter Piper picked a peck of pickled peppers a peck of pickled peppers Peter Piper picked.  
+Houston, the Eagle has landed.  
+Is that your final answer? 
+This is a test of the Huffman Tree I wrote.
+!!!
+01011001010110011111011011
+10110000101010011011101101100010110010101100010111000110111
+1111111000100011111110101111101100111111100010001111100000101000000111001011
+!!!
