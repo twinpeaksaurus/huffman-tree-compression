@@ -71,7 +71,6 @@ public class HuffmanDriver {
                break;
             }
             messagesToEncode.add(message);
-            System.out.println(message);
          }
 
          // PROCESSING DECODING
@@ -84,7 +83,6 @@ public class HuffmanDriver {
                break;
             }
             messagesToDecode.add(binaryMessage);
-            System.out.println(binaryMessage);
          }
 
          HuffmanTree ht = new HuffmanTree();

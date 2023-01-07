@@ -91,8 +91,6 @@ public class BinaryTree<E> {
       }
    }
 
-   // NEED TO ADD A PREORDER TRAVERSAL OF A TREE USING RECURSION
-
    public BinaryTree<E> getRightSubtree() {
       // If root is null or there is no right node/subtree, return null
       if (root != null && root.right != null) {
@@ -103,6 +101,7 @@ public class BinaryTree<E> {
       }
    }
 
+   // THIS WAS HANDLED IN HUFFMAN CLASS
    /**
     * 
     * @param root
@@ -151,54 +150,4 @@ public class BinaryTree<E> {
          return null;
       }
    }
-
-//
-//   /**
-//    * Starter method add.
-//    *
-//    * @param item The object being inserted
-//    * @return true if the object is inserted, false if the object already exists in
-//    *         the tree
-//    */
-//   public boolean add(E item) {
-//      root = add(root, item);
-//      if (addReturn) {
-//         size++;
-//      }
-//      return addReturn;
-//   }
-//
-//   /**
-//    * Recursive add method.
-//    *
-//    * postThe data field addReturn is set true if the item is added to the tree,
-//    * false if the item is already in the tree.
-//    * 
-//    * @param localRoot The local root of the subtree
-//    * @param item      The object to be inserted
-//    * @return The new local root that now contains the inserted item
-//    */
-//   protected Node<E> add(Node<E> localRoot, E item) {
-//      if (localRoot == null) {
-//         // item is not in the tree � insert it.
-//         addReturn = true;
-//         return new Node<>(item);
-//      }
-//      else if (item.compareTo(localRoot.data) == 0) {
-//         // item is equal to localRoot.data
-//         addReturn = false;
-//         return localRoot;
-//      }
-//      else if (item.compareTo(localRoot.data) < 0) {
-//         // item is less than localRoot.data
-//         localRoot.left = add(localRoot.left, item);
-//         return localRoot;
-//      }
-//      else {
-//         // item is greater than localRoot.data
-//         localRoot.right = add(localRoot.right, item);
-//         return localRoot;
-//      }
-//   }
-
 }

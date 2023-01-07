@@ -16,11 +16,9 @@ public class PriorityQueue<E> extends AbstractQueue<E>
 
    // ArrayList object will hold the elements' data.
    private final ArrayList<E> theData;
-   // Comparator can be used to set the order of sorting in the
-   // queue.
+   // Comparator can be used to set the order of sorting
    private final Comparator<E> comp;
 
-   @SuppressWarnings("unchecked")
    public PriorityQueue() {
       theData = new ArrayList<>(10);
       comp = (left, right) -> ((Comparable<E>) left).compareTo(right);
@@ -51,13 +49,10 @@ public class PriorityQueue<E> extends AbstractQueue<E>
    public boolean offer(E item) {
       // Add the item to the heap.
       theData.add(item);
-      // child is newly inserted item.
       int child = theData.size() - 1;
       // Find child's parent.
       int parent = (child - 1) / 2;
       // Reheap
-      // REMINDER: compare returns 1 when first value (parent)
-      // is greater than second value (child).
       while (parent >= 0 && comp.compare(theData.get(parent),
             theData.get(child)) > 0) {
          swap(parent, child);
@@ -70,8 +65,9 @@ public class PriorityQueue<E> extends AbstractQueue<E>
    /**
     * Remove an item from the priority queue
     *
-    * pre: The ArrayList theData is in heap order. post: Removed smallest item, and
-    * theData is in heap order.
+    * pre: The ArrayList theData is in heap order.
+    * 
+    * post: Removed smallest item, and theData is in heap order.
     * 
     * @return The item with the smallest priority value or null if empty.
     */
@@ -90,15 +86,15 @@ public class PriorityQueue<E> extends AbstractQueue<E>
       // Remove the last item from the ArrayList and place it into
       // the first position.
       theData.set(0, theData.remove(theData.size() - 1));
-      // The parent starts at the top.
       int parent = 0;
       while (true) {
          int leftChild = 2 * parent + 1;
          if (leftChild >= theData.size()) {
-            break; // Out of heap.
+            break;
          }
          int rightChild = leftChild + 1;
-         int minChild = leftChild; // Assume leftChild is smaller.
+         int minChild = leftChild;
+         // Assume leftChild is smaller.
          // See whether rightChild is smaller.
          if (rightChild < theData.size()
                && comp.compare(theData.get(leftChild),
@@ -133,6 +129,8 @@ public class PriorityQueue<E> extends AbstractQueue<E>
 
    /**
     * Defers to the ArrayList.size() method.
+    * 
+    * @return size of the queue
     */
    public int size() {
       return theData.size();
@@ -150,7 +148,4 @@ public class PriorityQueue<E> extends AbstractQueue<E>
    public Iterator<E> iterator() {
       return theData.iterator();
    }
-
-// Insert solution to programming exercise 1, section 6, chapter 06 here
 }
-/* </listing> */

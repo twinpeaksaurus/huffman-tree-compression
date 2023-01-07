@@ -18,26 +18,44 @@ public class HuffmanTree {
     * enclosing HuffmanTree class.
     */
    public static class SymbolNodeData {
-      // Data Fields
 
       // Frequency assigned to a given symbol.
       private double freq;
       // char in the node
       private char symbol;
 
+      /**
+       * Constructor for the node data.
+       * 
+       * @param freq
+       * @param symbol
+       */
       public SymbolNodeData(double freq, char symbol) {
          this.freq = freq;
          this.symbol = symbol;
       }
 
+      /**
+       * Retriever
+       * 
+       * @return
+       */
       public char getSymbol() {
          return symbol;
       }
 
+      /**
+       * Retriever
+       * 
+       * @return
+       */
       public double getFreq() {
          return freq;
       }
 
+      /**
+       * Test for equality of nodes.
+       */
       @Override
       public boolean equals(Object o) {
          if (this == o)
@@ -53,20 +71,19 @@ public class HuffmanTree {
          }
       }
 
-      @Override
-      public int hashCode() {
-         int hash = 7;
-         hash = 97 * hash + (int) (Double.doubleToLongBits(this.freq)
-               ^ (Double.doubleToLongBits(this.freq) >>> 32));
-         hash = 97 * hash + this.symbol;
-         return hash;
-      }
-
+      /**
+       * Return String representation of data.
+       */
       @Override
       public String toString() {
          return (Character.toString(symbol));
       }
 
+      /**
+       * String with frequency of the node symbol.
+       * 
+       * @return
+       */
       public String getNodeData() {
          return (Character.toString(symbol) + ": " + this.freq);
       }
@@ -242,12 +259,9 @@ public class HuffmanTree {
       int i = 0;
       for (String s : arrayOfStrings1) {
          s.trim();
-         System.out.println(s);
          arrayOfStrings2[i] = s.split(":");
          arrayOfStrings2[i][0].replaceAll("\\s", "");
          arrayOfStrings2[i][1].replaceAll("\\s", "");
-         System.out.println(
-               arrayOfStrings2[i][0] + arrayOfStrings2[i][1]);
          i++;
       }
       // end testing
@@ -255,8 +269,7 @@ public class HuffmanTree {
       for (String[] s : arrayOfStrings2) {
          char newChar = s[0].charAt(0);
          codeMap.put(Character.toUpperCase(newChar), s[1].trim());
-         System.out
-               .println(codeMap.get(Character.toUpperCase(newChar)));
+
       }
 
       i = 1;
@@ -264,14 +277,12 @@ public class HuffmanTree {
       for (Map.Entry<Character, String> e : codeMap.entrySet()) {
          Character key = e.getKey();
          String value = e.getValue();
-         System.out.println(key + " => " + value);
          codeArray[i] = value;
          i++;
       }
 
       // test print statement
       for (String s : codeArray) {
-         System.out.println(s);
       }
       // end testing
       return codeArray;

@@ -15,7 +15,6 @@ class HuffmanTreeTest {
    @Test
    void getNodeDataTest() {
       var testNode1 = new HuffmanTree.SymbolNodeData(5, 'e');
-//      System.out.println(testNode1.getNodeData());
       assertEquals("e: 5.0", testNode1.getNodeData());
    }
 
@@ -46,23 +45,7 @@ class HuffmanTreeTest {
       HuffmanTree.SymbolNodeData[] testArray = { testNode2, testNode1,
             testNode3, testNode4, testNode5 };
       ht.buildTree(testArray);
-//      System.out.println(ht.printCode());
-   }
-
-   @Test
-   public void buildTreeTestWithFrequency() {
-      HuffmanTree ht = new HuffmanTree();
-      var testNode1 = new HuffmanTree.SymbolNodeData(5, 'e');
-      var testNode2 = new HuffmanTree.SymbolNodeData(22, 'f');
-      var testNode3 = new HuffmanTree.SymbolNodeData(2, 'p');
-      var testNode4 = new HuffmanTree.SymbolNodeData(8, 'l');
-      var testNode5 = new HuffmanTree.SymbolNodeData(5, 't');
-      HuffmanTree.SymbolNodeData[] testArray = { testNode2, testNode1,
-            testNode3, testNode4, testNode5 };
-      ht.buildTree(testArray);
-//      System.out.println(ht.printCodeWithFrequency());
-      System.out.println(ht.processCodes());
-
+      assertTrue(ht.printCode().contains("t: 0111"));
    }
 
    @Test
@@ -118,9 +101,6 @@ class HuffmanTreeTest {
             testNoder, testNodes, testNodet, testNodeu, testNodev,
             testNodew, testNodex, testNodey, testNodez };
       ht.buildTree(testArray);
-      System.out.println(ht.encodeMessage(
-            "Peter Piper picked a peck of pickled peppers."));
-      System.out.println(ht.decode(
-            "1010001010000101001101001100010100010100110100110001101000100010011001111110100010110100010011110011011010011000110100010000010100110010100010101001010001010011110"));
+      assertTrue((ht.printCode().contains("v: 001011")));
    }
 }
