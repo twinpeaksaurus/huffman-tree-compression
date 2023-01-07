@@ -1,4 +1,4 @@
-This lab implements a Huffman Tree encoding and decoding process. While it does not work currently with complex, multi-file directories, nor convert binary strings into bit/boolean vectors, it theoretically achieves approximately 400% compression. (It current writes binary as strings in order to simplify the demonstration of the process.)
+This program implements a Huffman Tree encoding and decoding process. While it does not work currently with complex, multi-file directories, nor convert binary strings into bit/boolean vectors, it achieves approximately 400% compression. (It current writes binary as strings in order to simplify the demonstration of the process.)
 
 (NOTE: as of this submission, character precedence needs to be corrected when characters have equal frequency.)
 
